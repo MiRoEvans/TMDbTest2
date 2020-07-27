@@ -67,6 +67,18 @@ class TMDbAsker {
         let name: String
     }
     
+    func getActorDetailUsingId(_ id: Int) {
+        let detailActorUrl = "https://api.themoviedb.org/3/person/\(id)"
+        
+        var urlQueryItems = [URLQueryItem]()
+        // Start urlQueryItems with API key.
+        urlQueryItems.append(apiKeyUrlQueryItem)
+        
+        if let fullUrl = getUrlFrom(detailActorUrl, urlQueryItems: urlQueryItems) {
+            requestTMDbActorDetails(usingUrl: fullUrl)
+        }
+    }
+    
     func getMovieCastUsingId(_ id: Int) {
         let castMovieUrl = "https://api.themoviedb.org/3/movie/\(id)/credits"
         
@@ -149,6 +161,33 @@ class TMDbAsker {
                         print(result.cast_id)
                         print(result.credit_id)
                     }
+                } catch {
+                    print(error.localizedDescription)
+                }
+            }
+        }
+        funcDataTask?.resume()
+    }
+    
+    private func requestTMDbActorDetails(usingUrl url: URL) {
+        var funcDataTask: URLSessionTask? = defaultSession.dataTask(with: url) { [weak self] data, response, error
+            in
+            defer {
+                print("defer -- \(url)")
+                // self?.dataTask = nil
+            }
+            
+            if let error = error {
+                self?.errorMessage += "DataTask error: " + error.localizedDescription + "\n"
+            } else if
+                let data = data,
+                let response = response as? HTTPURLResponse,
+                response.statusCode == 200 {
+                do {
+                    let result = try JSONDecoder().decode(Actor.self, from: data)
+                    print(result.birthday)
+                    print(result.name)
+                    print(result.popularity)
                 } catch {
                     print(error.localizedDescription)
                 }

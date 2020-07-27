@@ -25,6 +25,10 @@ class ViewController: UIViewController {
         
         testTMDbAsker.getMovieCastUsingId(21683)
         
+        testTMDbAsker.getActorDetailUsingId(2)
+        
+        testTMDbAsker.getActorDetailUsingId(3)
+        
         
 //        let testTMDbAccess = TMDbAccess()
 //
