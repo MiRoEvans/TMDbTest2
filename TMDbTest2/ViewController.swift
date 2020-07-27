@@ -14,20 +14,40 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        let testTMDbAccess = TMDbAccess()
+        let testTMDbAsker = TMDbAsker()
         
-        let getSearchMovie = "https://api.themoviedb.org/3/search/movie"
         
-        var nameValueItems = [TMDbAccess.NameValueItem(name: "api_key", value: "1031f0ae64b4fe83395ca26c12f7c810")]
+        testTMDbAsker.getMoviesUsingSearchString("batwoman")
         
-        nameValueItems.append(TMDbAccess.NameValueItem(name: "query", value: "batman"))
+        testTMDbAsker.getActorsUsingSearchString("ford")
         
-        let testResult = testTMDbAccess.getUrlFrom(getSearchMovie, nameValueItems: nameValueItems)
+        testTMDbAsker.getMovieDetailUsingId(21683)
         
-        guard let getTheString = testResult?.absoluteString else {
-            return
-        }
-        print(getTheString)
+        testTMDbAsker.getMovieCastUsingId(21683)
+        
+        
+//        let testTMDbAccess = TMDbAccess()
+//
+//        let getSearchMovie = "https://api.themoviedb.org/3/search/movie"
+//
+//        var urlQueryItems = [URLQueryItem(name: "api_key", value: "1031f0ae64b4fe83395ca26c12f7c810")]
+//
+//        urlQueryItems.append(URLQueryItem(name: "query", value: "batwoman"))
+//
+//        let testResult = testTMDbAccess.getUrlFrom(getSearchMovie, urlQueryItems: urlQueryItems)
+//
+//        guard let getTheString = testResult?.absoluteString else {
+//            return
+//        }
+//        print(getTheString)
+//
+//        if let useUrl = testResult {
+//            testTMDbAccess.briefGetMovieSearchResults(usingUrl: useUrl)
+//            // testTMDbAccess.getMovieSearchResults(usingUrl: useUrl)
+//        }
+//
+//        print("\n***\nError message:\n\(testTMDbAccess.errorMessage)\n***\n")
+        
         
     }
 
